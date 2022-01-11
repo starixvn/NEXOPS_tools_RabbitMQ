@@ -11,7 +11,7 @@
       "name": "phillip",
       "password_hash": "EStVGe7YSuHDoiH4zwj9VAj4hWI=",
       "hashing_algorithm": "rabbit_password_hashing_md5",
-      "tags": "monitoring"
+      "tags": "administrator"
     },
     {
       "name": "NAPGateway",
@@ -53,7 +53,13 @@
       "name": "rabbitclient",
       "password_hash": "jXRQVsQkRAFJVLfH7FLQPyaKcdw=",
       "hashing_algorithm": "rabbit_password_hashing_md5",
-      "tags": "monitoring"
+      "tags": "administrator"
+    },
+    {
+      "name": "zabbix",
+      "password_hash": "KqK1/KXBIYmMAx5lisUaTpzHbZ469n5VbLYYidrVUJ52zB0a",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": "management"
     }
   ],
   "vhosts": [
@@ -151,6 +157,13 @@
       "read": ".*"
     },
     {
+      "user": "zabbix",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
       "user": "activity_tracking",
       "vhost": "/activity_tracking_uat",
       "configure": ".*",
@@ -221,9 +234,18 @@
       "read": ".*"
     }
   ],
-  "topic_permissions": [],
+  "topic_permissions": [
+    {
+      "user": "zabbix",
+      "vhost": "/",
+      "exchange": "",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
   "parameters": [],
-  "global_parameters": [],
+  "global_parameters": [    
+  ],
   "policies": [
     {
       "vhost": "/MailStationHost-UAT",
@@ -232,7 +254,8 @@
       "apply-to": "all",
       "definition": {
         "ha-mode": "all",
-        "ha-sync-mode": "automatic"
+        "ha-sync-mode": "automatic",
+        "message-ttl": 28800000
       },
       "priority": 0
     },
